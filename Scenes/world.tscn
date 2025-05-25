@@ -31,7 +31,7 @@ environment = SubResource("Environment_eulqq")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 use_collision = true
-size = Vector3(30, 0.002, 30)
+size = Vector3(60, 0.002, 60)
 
 [node name="Player" type="CharacterBody3D" parent="."]
 script = ExtResource("1_38fih")
