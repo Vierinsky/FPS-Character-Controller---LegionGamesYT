@@ -5,6 +5,11 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const SENSITIVITY = 0.001
 
+# Bob variables
+const BOB_FREQ = 2.0
+const BOB_AMP = 0.08
+var t_bob = 0.0
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 9.8
 
@@ -50,5 +55,13 @@ func _physics_process(delta):
 	else:
 		velocity.x = 0.0
 		velocity.z = 0.0
-
+	# Head bob
+	t_bob += delta * velocity.length() * float(is_on_floor())
+	camera.transdorm.origin = _headbob(t_bob)
+	
 	move_and_slide()
+	
+func _headbob(time) -> Vector3:
+	var pos = Vector3.ZERO
+	pos.y = sin(time * BOB_FREQ) * BOB_AMP
+	return pos
