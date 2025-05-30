@@ -56,12 +56,17 @@ func _physics_process(delta):
 	
 	# Hasta aqui llega mi modificación
 	
-	if direction:
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
+	if is_on_floor():
+		if direction:
+			velocity.x = direction.x * speed
+			velocity.z = direction.z * speed
+		else:
+			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
+			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
 	else:
-		velocity.x = 0.0
-		velocity.z = 0.0
+		velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0)
+		velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
+		
 	# Head bob
 	t_bob += delta * velocity.length() * float(is_on_floor())
 	camera.transform.origin = _headbob(t_bob)
